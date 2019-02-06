@@ -1,0 +1,57 @@
+<template format="4"
+		revision="1"
+		name="MVVM Adapter"
+		description="Creates MVVM Adapter">
+
+        <category value="MVVm blog" />
+	<formfactor value="Mobile" />
+ 
+	<parameter id="adapterName"
+		name="Adapter Name"
+		type="string"
+		constraints="class|nonempty"
+		default="test"
+		help="Name of the new Adapter, excluding the word &quot;Activity&quot;"/>
+        
+         <parameter id="modelName"
+		name="Model Name"
+		type="string"
+		constraints="class|unique|nonempty"
+		help="Model Name" />
+
+		
+    <parameter
+        id="layoutName"
+        name="Layout Name"
+        type="string"
+        constraints="layout|nonempty"
+        suggest="${modelName[0]?lower_case}${modelName[1..]}_item_view"
+        default="item_view"
+        help="The name of the layout to create for the model" />
+
+     <parameter
+        id="BrName"
+        name="BR name"
+        type="string"
+        suggest="${modelName[0]?lower_case}${modelName[1..]}item"
+        constraints="nonempty"
+        />
+
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package|nonempty"
+        default="com.mycompany.myapp" />
+
+
+		
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_mvvm_activity.png</thumb>
+    </thumbs>
+ 
+	<globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+ 
+</template>
