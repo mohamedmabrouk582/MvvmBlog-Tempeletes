@@ -1,0 +1,90 @@
+<template format="4"
+		revision="1"
+		name="MVVM Activity"
+		description="Creates MVVM activity">
+
+        <category value="MVVm blog" />
+	<formfactor value="Mobile" />
+ 
+	<parameter id="activityName"
+		name="Activity Name"
+		type="string"
+		constraints="class|unique|nonempty"
+		default="test"
+		help="Name of the new activity, excluding the word &quot;Activity&quot;"/>
+        
+         <parameter id="apiName"
+		name="Api Name"
+		type="string"
+		constraints="class|unique|nonempty"
+		help="Api Name is retrofit client " />
+ 
+          <parameter id="viewModelPackage"
+		name="View Model Package Name"
+		type="string"
+		constraints="nonempty"
+		suggest="${activityName[0]?lower_case}${activityName[1..]}s"
+		help="package Name that have viewmodel" />
+		
+    <parameter
+        id="layoutName"
+        name="Layout Name"
+        type="string"
+        constraints="layout|nonempty"
+        suggest="${activityToLayout(activityName)}"
+        default="main_layout"
+        help="The name of the layout to create for the activity" />
+
+     <parameter
+        id="BrName"
+        name="BR name"
+        type="string"
+        suggest="${activityName[0]?lower_case}${activityName[1..]}Vm"
+        constraints="nonempty"
+        />
+
+    <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package|nonempty"
+        default="com.mycompany.myapp" />
+
+	<parameter
+		id="addToolbar"
+		name="Add toolbar"
+		type="boolean"
+		default="false" />
+
+        
+	<parameter
+		id="hasLoader"
+		name="Has Loader"
+		type="boolean"
+		default="false" />
+        <parameter
+		id="hasPaging"
+		name="Has Paging"
+		type="boolean"
+		default="false" />
+        <parameter
+		id="hasApi"
+		name="Has Connect Api"
+		type="boolean"
+		default="true" />
+
+       <parameter
+		id="addDepandancy"
+		name="Add App Dependancy"
+		type="boolean"
+		default="true" />
+		
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_mvvm_activity.png</thumb>
+    </thumbs>
+ 
+	<globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+ 
+</template>
