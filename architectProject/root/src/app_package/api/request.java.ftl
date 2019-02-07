@@ -33,39 +33,41 @@ public class Request<t> extends DisposableObserver<t> {
         }
     }
 
-    @Override
+       @Override
     public void onError(Throwable t) {
         if (!CheckNetwork.isConnected(context)) {
-            listener.onNetWorkError("No Internet Connection");
+            listener.onNetWorkError();
         } else {
-
             if (t instanceof HttpException) {
                 int code = ((HttpException) t).code();
-                Log.d("RequestOne ", "Throwable " + t.getLocalizedMessage());
-//                if (code == 401 || code == 400) {
-//                    listener.onSessionExpired(context.getString(R.string.invalid_credentials));
-//                } else if (code == 504) {
-//                    listener.onError(context.getString(R.string.timeout));
-//                } else {
-//                    listener.onError(context.getString(R.string.serverError));
-//                }
-
-
-                if (code==401){
-                    listener.onSessionExpired(t.getMessage());
-                }else if (code==403){
-                    listener.onError(t.getMessage());
-                }else if (code==404){
-                  listener.onEmpty("Not Found");
-                }else if (code==405){
-                  listener.onError(t.getMessage());
-                }else if (code==400){
-                  listener.onError(t.getMessage());
-                }else if (code==500){
-                  listener.onError("Internal Server Error");
-                }else {
-                    listener.onError("Server Error");
+                try {
+                    String error=t.getMessage();
+                    String responseStrings = ((HttpException) t).response().errorBody().string();
+                    JSONObject jsonObject= new JSONObject(responseStrings);
+                       if (jsonObject.has("msg")){
+                         error=jsonObject.getString("msg");
+                       }else if(jsonObject.has("error")) {
+                           error=jsonObject.getString("error");
+                       }
+                        if (code == 401) {
+                            listener.onSessionExpired(error);
+                        } else if (code == 403) {
+                            listener.onSessionExpired(error);
+                        } else if (code == 404) {
+                            listener.onEmpty("Not Found");
+                        } else if (code == 405) {
+                            listener.onError(error);
+                        } else if (code == 400) {
+                            listener.onError(error);
+                        } else if (code == 500) {
+                            listener.onError(error);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             } else if (t instanceof java.net.SocketTimeoutException) {
                 listener.onError(context.getString(R.string.socketTimeout));
             } else if (t instanceof JsonSyntaxException) {
