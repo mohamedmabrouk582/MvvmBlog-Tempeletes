@@ -68,7 +68,9 @@ public class DatePickerFragment extends DialogFragment {
         int month=calendar.get(Calendar.MONTH);
         int year=calendar.get(Calendar.YEAR);
         View v= LayoutInflater.from(getActivity()).inflate(R.layout.date_layout,null,false);
-        mDatePicker=v.findViewById(R.id.date_picker);
+        mDatePicker=v.findViewById(R.id.date_picker);'
+        if(getArguments().getBoolean(ISConstrant,false))
+          mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
 
         mDatePicker.init(year, month, day, null);
         return new AlertDialog.Builder(getActivity()).

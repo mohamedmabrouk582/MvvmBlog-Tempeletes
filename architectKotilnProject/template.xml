@@ -1,0 +1,57 @@
+<template format="4"
+		revision="1"
+		name="Architect Kotiln Project"
+		description="Architect Your App mvvm dagger and google arch component kotlin">
+
+        <category value="MVVm kotiln blog" />
+	<formfactor value="Mobile" />
+
+        <parameter
+		id="hasApi"
+		name="Has Api Connection"
+		type="boolean"
+		default="true" />
+
+
+        <parameter
+		id="hasKoin"
+		name="Apply Koin (check) or Dagger (no check)"
+		type="boolean"
+		default="false" />
+
+
+        <parameter
+		id="hasDb"
+		name="Has Room DataeBase"
+		type="boolean"
+		default="false" />
+
+           
+              <parameter id="apiName"
+		name="Api Name"
+		type="string"
+                default="BaseApi"
+		constraints="class|unique|nonempty"
+		help="Api Name is retrofit client " />
+
+              <parameter id="baseUrl"
+		name="Base Url"
+		type="url"
+                default="https://api.themoviedb.org/3/"
+		constraints="url|unique|nonempty"
+		help="Your App BaseURL" /> 
+       <parameter
+        id="packageName"
+        name="Package name"
+        type="string"
+        constraints="package|nonempty"
+        default="com.mycompany.myapp" />
+
+ <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>template_mvvm_activity.png</thumb>
+    </thumbs>
+    <globals file="globals.xml.ftl" />
+    <execute file="recipe.xml.ftl" />
+ 
+</template>

@@ -33,7 +33,7 @@ public class Request<t> extends DisposableObserver<t> {
         }
     }
 
-       @Override
+        @Override
     public void onError(Throwable t) {
         if (!CheckNetwork.isConnected(context)) {
             listener.onNetWorkError();
@@ -41,12 +41,12 @@ public class Request<t> extends DisposableObserver<t> {
             if (t instanceof HttpException) {
                 int code = ((HttpException) t).code();
                 try {
-                    String error=t.getMessage();
+                    String error;
                     String responseStrings = ((HttpException) t).response().errorBody().string();
                     JSONObject jsonObject= new JSONObject(responseStrings);
                        if (jsonObject.has("msg")){
                          error=jsonObject.getString("msg");
-                       }else if(jsonObject.has("error")) {
+                       }else {
                            error=jsonObject.getString("error");
                        }
                         if (code == 401) {
